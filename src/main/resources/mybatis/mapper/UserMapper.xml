@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmily.community.mapper.UserMapper">
+    <insert id="insertUser" parameterType="com.hmily.community.domain.User">
+        insert into user (account_id,name,token,gmt_create,gmt_modified)
+        values (#{accountId},#{name},#{token},#{gmtCreate},#{gmtModified})
+    </insert>
+</mapper>
