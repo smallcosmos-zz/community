@@ -8,4 +8,6 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 
     void insertUser(User user);
+
+    User getUserByToken(String token);
 }

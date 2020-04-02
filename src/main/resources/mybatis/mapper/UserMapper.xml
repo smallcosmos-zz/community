@@ -3,8 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hmily.community.mapper.UserMapper">
-    <insert id="insertUser" parameterType="com.hmily.community.domain.User">
+<!--    插入用户-->
+    <insert id="insertUser" parameterType="User">
         insert into user (account_id,name,token,gmt_create,gmt_modified)
         values (#{accountId},#{name},#{token},#{gmtCreate},#{gmtModified})
     </insert>
+<!--    根据token查询用户-->
+    <select id="getUserByToken" parameterType="String" resultType="User">
+        select * from user
+        where token = #{token}
+    </select>
 </mapper>
