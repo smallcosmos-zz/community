@@ -5,8 +5,8 @@
 <mapper namespace="com.hmily.community.mapper.UserMapper">
 <!--    插入用户-->
     <insert id="insertUser" parameterType="User">
-        insert into user (account_id,name,token,gmt_create,gmt_modified)
-        values (#{accountId},#{name},#{token},#{gmtCreate},#{gmtModified})
+        insert into user (account_id,name,token,gmt_create,gmt_modified,avatar_url)
+        values (#{accountId},#{name},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})
     </insert>
 <!--    根据token查询用户-->
     <select id="getUserByToken" parameterType="String" resultType="User">

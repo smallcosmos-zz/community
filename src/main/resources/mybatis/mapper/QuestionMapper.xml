@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmily.community.mapper.QuestionMapper">
+    <insert id="insertQuestion" parameterType="Question">
+        insert  into question (title,description,gmt_create,gmt_modified,creator,tag)
+        values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})
+    </insert>
+
+    <resultMap id="getQuestionsAndUsers" type="com.hmily.community.dto.QuestionDTO">
+        <id property="id" column="id"></id>
+        <result column="title" property="title"></result>
+        <result column="description" property="description"></result>
+        <result column="gmt_create" property="gmtCreate"></result>
+        <result column="creator" property="creator"></result>
+        <result column="gmt_modified" property="gmtModified"></result>
+        <result column="comment_count" property="commentCount"></result>
+        <result column="view_count" property="viewCount"></result>
+        <result column="like_count" property="likeCount"></result>
+        <result column="tag" property="tag"></result>
+        <association property="user" javaType="user">
+            <id column="u.id" property="id"></id>
+            <result property="avatarUrl" column="avatar_url"></result>
+        </association>
+    </resultMap>
+    <select id="getQuestionList" resultMap="getQuestionsAndUsers">
+            select q.*,u.avatar_url from question q,user u
+            where q.creator  = u.id
+    </select>
+</mapper>
