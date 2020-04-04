@@ -1,8 +1,8 @@
 package com.hmily.community.controller;
 
 import com.hmily.community.domain.User;
+import com.hmily.community.dto.PageBean;
 import com.hmily.community.dto.QuestionDTO;
-import com.hmily.community.mapper.UserMapper;
 import com.hmily.community.service.QuestionService;
 import com.hmily.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,9 @@ public class IndexController {
     private QuestionService questionService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model) {
+    public String index(HttpServletRequest request,Model model,
+                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+                        @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length > 0) {
             for (Cookie cookie : cookies) {
@@ -36,8 +38,8 @@ public class IndexController {
                 }
             }
         }
-        List<QuestionDTO> questions= questionService.getQuestionDTOList();
-        model.addAttribute("questions",questions);
+        PageBean<QuestionDTO> pageBean = questionService.getQuestionDTOList(page,pageSize);
+        model.addAttribute("pageBean",pageBean);
         return "index";
     }
 }

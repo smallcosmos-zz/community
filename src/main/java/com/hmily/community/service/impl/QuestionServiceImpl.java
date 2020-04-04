@@ -2,6 +2,7 @@ package com.hmily.community.service.impl;
 
 import com.hmily.community.domain.Question;
 import com.hmily.community.domain.User;
+import com.hmily.community.dto.PageBean;
 import com.hmily.community.dto.QuestionDTO;
 import com.hmily.community.mapper.QuestionMapper;
 import com.hmily.community.service.QuestionService;
@@ -66,9 +67,12 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDTO> getQuestionDTOList() {
-        List<QuestionDTO> list  = questionMapper.getQuestionList();
+    public PageBean<QuestionDTO> getQuestionDTOList(Integer page,Integer pageSize) {
+        Integer totalCount = questionMapper.getTotalCount();
+        PageBean<QuestionDTO> pageBean = new PageBean<>(page,pageSize,totalCount);
 
-        return list;
+        List<QuestionDTO> list  = questionMapper.getQuestionList(pageBean.getOffset(),pageBean.getPageSize());
+        pageBean.setList(list);
+        return pageBean;
     }
 }

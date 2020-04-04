@@ -10,5 +10,7 @@ import java.util.List;
 public interface QuestionMapper {
     void insertQuestion(Question question);
 
-    List<QuestionDTO> getQuestionList();
+    List<QuestionDTO> getQuestionList(Integer offset,Integer pageSize);
+
+    Integer getTotalCount();
 }

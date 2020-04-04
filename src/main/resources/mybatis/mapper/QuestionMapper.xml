@@ -8,6 +8,9 @@
         values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})
     </insert>
 
+    <select id="getTotalCount" resultType="Integer">
+        select count(1) from question;
+    </select>
     <resultMap id="getQuestionsAndUsers" type="com.hmily.community.dto.QuestionDTO">
         <id property="id" column="id"></id>
         <result column="title" property="title"></result>
@@ -27,5 +30,6 @@
     <select id="getQuestionList" resultMap="getQuestionsAndUsers">
             select q.*,u.avatar_url from question q,user u
             where q.creator  = u.id
+            limit #{param1},#{param2}
     </select>
 </mapper>
