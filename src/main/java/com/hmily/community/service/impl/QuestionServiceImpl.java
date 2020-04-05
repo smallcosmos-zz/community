@@ -75,4 +75,14 @@ public class QuestionServiceImpl implements QuestionService {
         pageBean.setList(list);
         return pageBean;
     }
+
+    @Override
+    public PageBean<QuestionDTO> getQuestionDTOListByUserId(Integer id, Integer page, Integer pageSize) {
+        Integer totalCount = questionMapper.getTotalCountByUserId(id);
+        PageBean<QuestionDTO> pageBean = new PageBean<>(page,pageSize,totalCount);
+
+        List<QuestionDTO> list  = questionMapper.getQuestionListByUserId(id,pageBean.getOffset(),pageBean.getPageSize());
+        pageBean.setList(list);
+        return pageBean;
+    }
 }

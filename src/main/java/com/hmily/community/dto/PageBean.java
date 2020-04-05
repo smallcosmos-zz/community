@@ -43,6 +43,9 @@ public class PageBean<T> {
         if (page > totalPage){
             this.page = totalPage;
         }
+        if(this.totalPage == 0){
+            this.page = 1;
+        }
         //计算页码的偏移量
         this.offset = (this.page-1) * this.pageSize;
         //判断是否显示上一页按钮

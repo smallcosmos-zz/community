@@ -11,4 +11,6 @@ public interface QuestionService {
     void insertQuestion(Question question, HttpServletRequest request);
 
     PageBean<QuestionDTO> getQuestionDTOList(Integer page, Integer paeSize);
+
+    PageBean<QuestionDTO> getQuestionDTOListByUserId(Integer id, Integer page, Integer pageSize);
 }

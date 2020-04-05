@@ -32,4 +32,14 @@
             where q.creator  = u.id
             limit #{param1},#{param2}
     </select>
+    <select id="getTotalCountByUserId" resultType="Integer">
+        select count(1) from question where creator = #{id};
+    </select>
+
+    <select id="getQuestionListByUserId"  resultMap="getQuestionsAndUsers">
+            select q.*,u.avatar_url from question q,user u
+            where q.creator = #{param1} and q.creator = u.id
+            limit #{param2},#{param3}
+    </select>
+
 </mapper>

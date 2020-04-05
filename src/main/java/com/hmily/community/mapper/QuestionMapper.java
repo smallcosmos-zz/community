@@ -13,4 +13,8 @@ public interface QuestionMapper {
     List<QuestionDTO> getQuestionList(Integer offset,Integer pageSize);
 
     Integer getTotalCount();
+
+    Integer getTotalCountByUserId(Integer id);
+
+    List<QuestionDTO> getQuestionListByUserId(Integer id, Integer offset, Integer pageSize);
 }
