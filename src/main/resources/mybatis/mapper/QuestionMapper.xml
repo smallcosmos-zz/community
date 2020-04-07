@@ -23,13 +23,17 @@
         <result column="like_count" property="likeCount"></result>
         <result column="tag" property="tag"></result>
         <association property="user" javaType="user">
-            <id column="u.id" property="id"></id>
+            <id column="user_id" property="id"></id>
             <result property="avatarUrl" column="avatar_url"></result>
+            <result property="name" column="name"></result>
         </association>
     </resultMap>
+    <sql id="questionAndUSer">
+        select q.*,u.id as user_id,u.name,u.avatar_url from question q,user u
+    </sql>
     <select id="getQuestionList" resultMap="getQuestionsAndUsers">
-            select q.*,u.avatar_url from question q,user u
-            where q.creator  = u.id
+            <include refid="questionAndUSer"></include>
+             where q.creator  = u.id
             limit #{param1},#{param2}
     </select>
     <select id="getTotalCountByUserId" resultType="Integer">
@@ -37,9 +41,24 @@
     </select>
 
     <select id="getQuestionListByUserId"  resultMap="getQuestionsAndUsers">
-            select q.*,u.avatar_url from question q,user u
-            where q.creator = #{param1} and q.creator = u.id
+            <include refid="questionAndUSer"></include>
+             where q.creator = #{param1} and q.creator = u.id
             limit #{param2},#{param3}
     </select>
+    
+    <select id="getQuestionDTOById" parameterType="Integer" resultMap="getQuestionsAndUsers">
+            <include refid="questionAndUSer"></include>
+            where  q.creator = u.id and q.id = #{id}
+    </select>
 
+    <update id="updateQuestion" parameterType="Question">
+        update question
+        set
+        title=#{title},
+        description=#{description},
+        tag=#{tag},
+        gmt_modified=#{gmtModified}
+        where
+        id=#{id}
+    </update>
 </mapper>

@@ -8,4 +8,8 @@ public interface UserMapper {
     void insertUser(User user);
 
     User getUserByToken(String token);
+
+    User getUserByAccountId(String accountId);
+
+    void updateUser(User dbUser);
 }

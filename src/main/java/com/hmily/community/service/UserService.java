@@ -10,4 +10,6 @@ public interface UserService {
     void insertUser(User user);
 
     User getUserByToken(String token);
+
+    void createOrUpdateUser(User user);
 }

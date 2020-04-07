@@ -19,4 +19,23 @@ public class UserServiceImpl implements UserService {
     public User getUserByToken(String token) {
         return userMapper.getUserByToken(token);
     }
+
+    @Override
+    public void createOrUpdateUser(User user) {
+        User dbUser = userMapper.getUserByAccountId(user.getAccountId());
+        if (dbUser == null){
+            //插入用户
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insertUser(user);
+        }else {
+            //更新用户
+            dbUser.setGmtModified(System.currentTimeMillis());
+            dbUser.setName(user.getName());
+            dbUser.setAvatarUrl(user.getAvatarUrl());
+            dbUser.setToken(user.getToken());
+            dbUser.setBio(user.getBio());
+            userMapper.updateUser(dbUser);
+        }
+    }
 }

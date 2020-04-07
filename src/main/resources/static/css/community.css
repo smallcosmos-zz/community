@@ -22,3 +22,8 @@ body{
 .profile .section{
     margin-top: 18px;
 }
+.community-menu{
+    color: #999;
+    font-size: 14px;
+    cursor: pointer;
+}

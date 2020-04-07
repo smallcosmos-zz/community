@@ -23,7 +23,7 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.getTitle()}">怎么快速学会Spring Boot开发</h4>
+                   <a th:href="@{'/question/'+${question.id}}"> <h4 class="media-heading" th:text="${question.getTitle()}">怎么快速学会Spring Boot开发</h4></a>
                     <span th:text="${question.getDescription()}">点击进入看 小匠 录制的视频</span><br>
                     <span class="text-desc">• [[${question.commentCount}]] 个回复 • [[${question.viewCount}]] 次浏览 • [[${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm:ss')}]] </span>
                 </div>

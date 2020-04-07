@@ -27,17 +27,6 @@ public class IndexController {
     public String index(HttpServletRequest request,Model model,
                         @RequestParam(name = "page",defaultValue = "1") Integer page,
                         @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length > 0) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    String token = cookie.getValue();
-                    User user = userService.getUserByToken(token);
-                    request.getSession().setAttribute("user", user);
-                    break;
-                }
-            }
-        }
         PageBean<QuestionDTO> pageBean = questionService.getQuestionDTOList(page,pageSize);
         model.addAttribute("pageBean",pageBean);
         return "index";

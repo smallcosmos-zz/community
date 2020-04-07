@@ -17,4 +17,8 @@ public interface QuestionMapper {
     Integer getTotalCountByUserId(Integer id);
 
     List<QuestionDTO> getQuestionListByUserId(Integer id, Integer offset, Integer pageSize);
+
+    QuestionDTO getQuestionDTOById(Integer id);
+
+    void updateQuestion(Question question);
 }

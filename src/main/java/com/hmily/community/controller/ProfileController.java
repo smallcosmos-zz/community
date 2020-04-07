@@ -35,18 +35,8 @@ public class ProfileController {
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","我的回复");
         }
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length > 0) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    String token = cookie.getValue();
-                    user = userService.getUserByToken(token);
-                    request.getSession().setAttribute("user", user);
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
+
         if(user == null){
             return "redirect:/";
         }
