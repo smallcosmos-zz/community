@@ -4,6 +4,8 @@ import com.hmily.community.domain.Question;
 import com.hmily.community.domain.User;
 import com.hmily.community.dto.PageBean;
 import com.hmily.community.dto.QuestionDTO;
+import com.hmily.community.exception.CustomizeErrorCode;
+import com.hmily.community.exception.CustomizeException;
 import com.hmily.community.mapper.QuestionMapper;
 import com.hmily.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public QuestionDTO getQuestionDTOById(Integer id) {
-        return questionMapper.getQuestionDTOById(id);
+        QuestionDTO questionDTOById = questionMapper.getQuestionDTOById(id);
+        if(questionDTOById == null){
+            throw new CustomizeException(CustomizeErrorCode.QEUSTION_NOT_FONUF);
+        }
+        return questionDTOById;
     }
 
     @Override
@@ -61,7 +67,7 @@ public class QuestionServiceImpl implements QuestionService {
                 question.setGmtModified(System.currentTimeMillis());
                 questionMapper.updateQuestion(question);
             } catch (Exception e) {
-                throw new RuntimeException("问题修改失败");
+                throw new CustomizeException(CustomizeErrorCode.QEUSTION_NOT_FONUF);
             }
 
         } else {

@@ -27,3 +27,9 @@ body{
     font-size: 14px;
     cursor: pointer;
 }
+.jumbotron{
+   height: 700px;
+}
+.jumbotron .error-content{
+    margin: 50px;
+}
