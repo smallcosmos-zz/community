@@ -21,4 +21,8 @@ public interface QuestionMapper {
     QuestionDTO getQuestionDTOById(Integer id);
 
     void updateQuestion(Question question);
+
+    void addViewCount(Integer id);
+
+    void addCommentCount(Integer parentId);
 }

@@ -61,4 +61,19 @@
         where
         id=#{id}
     </update>
+    <update id="addViewCount" parameterType="Integer">
+        update question
+        set
+        view_count=view_count+1
+        where
+        id=#{id}
+    </update>
+
+    <update id="addCommentCount" parameterType="Integer">
+        update question
+        set
+        comment_count=comment_count+1
+        where
+        id=#{id}
+    </update>
 </mapper>

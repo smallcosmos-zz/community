@@ -46,6 +46,8 @@ public class QuestionServiceImpl implements QuestionService {
         if(questionDTOById == null){
             throw new CustomizeException(CustomizeErrorCode.QEUSTION_NOT_FONUF);
         }
+        questionDTOById.setViewCount(questionDTOById.getViewCount()+1);
+        questionMapper.addViewCount(id);
         return questionDTOById;
     }
 
