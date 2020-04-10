@@ -25,4 +25,6 @@ public interface QuestionMapper {
     void addViewCount(Integer id);
 
     void addCommentCount(Integer parentId);
+
+    Question getQuestionById(Integer id);
 }

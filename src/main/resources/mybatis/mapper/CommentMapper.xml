@@ -12,4 +12,27 @@
     <select id="selectCommentById" resultType="comment">
         select * from comment
     </select>
+
+    <resultMap id="getCommentsAndUsers" type="com.hmily.community.dto.CommentDTO">
+        <id column="id" property="id"></id>
+        <result property="parentId" column="parent_id"></result>
+        <result property="type" column="type"></result>
+        <result property="commentator" column="commentator"></result>
+        <result property="gmtCreate" column="gmt_create"></result>
+        <result property="gmtModified" column="gmt_modified"></result>
+        <result property="likeCount" column="like_count"></result>
+        <result property="content" column="content"></result>
+        <association property="user" javaType="User">
+            <id column="uid" property="id" ></id>
+            <result property="name" column="name"></result>
+            <result property="avatarUrl" column="avatar_url"></result>
+        </association>
+    </resultMap>
+    <select id="getCommentDTOByQuestionId" resultMap="getCommentsAndUsers">
+        select c.*,u.id as uid ,name,avatar_url from comment c,user u
+        where c.commentator = u.id
+        and c.parent_id = #{param1}
+        and c.type = #{param2}
+        order by c.gmt_create desc
+    </select>
 </mapper>

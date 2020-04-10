@@ -1,6 +1,8 @@
 package com.hmily.community.service.impl;
 
 import com.hmily.community.domain.Comment;
+import com.hmily.community.domain.Question;
+import com.hmily.community.dto.CommentDTO;
 import com.hmily.community.dto.QuestionDTO;
 import com.hmily.community.enums.CommentTypeEnum;
 import com.hmily.community.exception.CustomizeErrorCode;
@@ -11,6 +13,8 @@ import com.hmily.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @Date 2020/4/8 下午5:55
@@ -23,7 +27,7 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private QuestionMapper questionMapper;
     @Override
-    @Transactional
+    @Transactional(rollbackFor = CustomizeException.class)
     public void insertComment(Comment comment) {
         if(comment.getParentId() == null || comment.getParentId() ==0){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FONUF);
@@ -40,14 +44,18 @@ public class CommentServiceImpl implements CommentService {
            commentMapper.insertComment(comment);
         }else{
             //回复问题
-            QuestionDTO questionDTOById = questionMapper.getQuestionDTOById(comment.getParentId());
-            if(questionDTOById == null){
+            Question question = questionMapper.getQuestionById(comment.getParentId());
+            if(question == null){
                 throw new CustomizeException(CustomizeErrorCode.QEUSTION_NOT_FONUF);
             }
             commentMapper.insertComment(comment);
             questionMapper.addCommentCount(comment.getParentId());
         }
 
-        commentMapper.insertComment(comment);
+    }
+
+    @Override
+    public List<CommentDTO> getCommentDTOByQuestionId(Integer id) {
+        return commentMapper.getCommentDTOByQuestionId(id,CommentTypeEnum.QUESTION.getType());
     }
 }

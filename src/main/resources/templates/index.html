@@ -9,6 +9,15 @@
     <script type="text/javascript" th:src="@{/js/jquery-1.11.3.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 </head>
+<script type="text/javascript">
+    window.onload = function () {
+        var closeable = localStorage.getItem("closeable");
+        if(closeable == "true"){
+            window.close();
+            localStorage.removeItem("closeable");
+        }
+    }
+</script>
 <body>
 <div th:replace="navigation::.navbar"></div>
 <div class="container-fluid main">

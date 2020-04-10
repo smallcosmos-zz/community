@@ -7,7 +7,7 @@ import lombok.Data;
  * @Created by zhaoli
  */
 @Data
-public class CommnetDTO {
+public class CommentCreateDTO {
     private Integer parentId;
     private String content;
     private Integer type;

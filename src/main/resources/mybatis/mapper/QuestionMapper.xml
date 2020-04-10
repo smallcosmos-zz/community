@@ -32,23 +32,24 @@
         select q.*,u.id as user_id,u.name,u.avatar_url from question q,user u
     </sql>
     <select id="getQuestionList" resultMap="getQuestionsAndUsers">
-            <include refid="questionAndUSer"></include>
-             where q.creator  = u.id
-            limit #{param1},#{param2}
+        <include refid="questionAndUSer"></include>
+        where q.creator = u.id
+        order by gmt_create desc
+        limit #{param1},#{param2}
     </select>
     <select id="getTotalCountByUserId" resultType="Integer">
         select count(1) from question where creator = #{id};
     </select>
 
-    <select id="getQuestionListByUserId"  resultMap="getQuestionsAndUsers">
-            <include refid="questionAndUSer"></include>
-             where q.creator = #{param1} and q.creator = u.id
-            limit #{param2},#{param3}
+    <select id="getQuestionListByUserId" resultMap="getQuestionsAndUsers">
+        <include refid="questionAndUSer"></include>
+        where q.creator = #{param1} and q.creator = u.id
+        limit #{param2},#{param3}
     </select>
-    
+
     <select id="getQuestionDTOById" parameterType="Integer" resultMap="getQuestionsAndUsers">
-            <include refid="questionAndUSer"></include>
-            where  q.creator = u.id and q.id = #{id}
+        <include refid="questionAndUSer"></include>
+        where q.creator = u.id and q.id = #{id}
     </select>
 
     <update id="updateQuestion" parameterType="Question">
@@ -76,4 +77,9 @@
         where
         id=#{id}
     </update>
+
+    <select id="getQuestionById" parameterType="Integer" resultType="Question">
+        select * from question
+        where id=#{id}
+    </select>
 </mapper>
