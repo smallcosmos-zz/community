@@ -82,4 +82,8 @@
         select * from question
         where id=#{id}
     </select>
+
+    <select id="selectReleatedQuestion" parameterType="Question" resultType="question">
+        select * from question where id != #{id} and tag regexp #{tag}
+    </select>
 </mapper>

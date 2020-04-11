@@ -8,6 +8,7 @@ import com.hmily.community.exception.CustomizeErrorCode;
 import com.hmily.community.exception.CustomizeException;
 import com.hmily.community.mapper.QuestionMapper;
 import com.hmily.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -89,5 +90,14 @@ public class QuestionServiceImpl implements QuestionService {
                 throw new RuntimeException("问题发表失败");
             }
         }
+    }
+
+    @Override
+    public List<Question> selectReleatedQuestion(QuestionDTO questionDTO) {
+        Question question = new Question();
+        question.setId(questionDTO.getId());
+        question.setTag(StringUtils.replace(questionDTO.getTag(),",","|"));
+        List<Question> releatedQuestion = questionMapper.selectReleatedQuestion(question);
+        return releatedQuestion;
     }
 }

@@ -39,6 +39,6 @@
 
 
     <select id="getCommentCountById" parameterType="Integer" resultType="Long">
-        select count(1) from comment where parent_id=#{id};
+        select count(1) from comment where parent_id=#{id} and type=2;
     </select>
 </mapper>

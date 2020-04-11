@@ -1,5 +1,6 @@
 package com.hmily.community.controller;
 
+import com.hmily.community.domain.Question;
 import com.hmily.community.dto.CommentDTO;
 import com.hmily.community.dto.QuestionDTO;
 import com.hmily.community.enums.CommentTypeEnum;
@@ -25,6 +26,7 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     public String question(@PathVariable("id") Integer id, Model model){
         QuestionDTO questionDTO = questionService.getQuestionDTOById(id);
+        List<Question> releatedQuestions = questionService.selectReleatedQuestion(questionDTO);
         List<CommentDTO> comments =  commentService.getCommentDTOByTargetId(id, CommentTypeEnum.QUESTION);
         for (CommentDTO comment : comments) {
             comment.setCommentCount(commentService.getCommentCountById(comment.getId()));
@@ -32,6 +34,7 @@ public class QuestionController {
 
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("comments",comments);
+        model.addAttribute("releatedQuestions",releatedQuestions);
         return "question";
     }
 }

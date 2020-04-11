@@ -18,6 +18,20 @@ body{
 .question-title{
     margin-top: 25px;
 }
+.question-tag{
+    margin-right: 5px;
+    font-size: 14px;
+}
+.question-releated{
+    padding-left: 0;
+    list-style-type: none;
+    line-height: 25.4px;
+    font-size: 13px;
+    font-family: candara,"Helvetica Neue",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","WenQuanYi Micro Hei","Microsoft Yahei",sans-serif, -apple-system;
+}
+.question-wechat{
+    width: 100%;
+}
 .creator{
     margin-top: 25px;
 }

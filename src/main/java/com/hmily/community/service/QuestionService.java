@@ -16,4 +16,6 @@ public interface QuestionService {
     QuestionDTO getQuestionDTOById(Integer id);
 
     void createOrUpdateQuestion(Question question, HttpServletRequest request);
+
+    List<Question> selectReleatedQuestion(QuestionDTO question);
 }

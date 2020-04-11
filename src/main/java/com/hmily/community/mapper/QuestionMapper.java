@@ -27,4 +27,6 @@ public interface QuestionMapper {
     void addCommentCount(Integer parentId);
 
     Question getQuestionById(Integer id);
+
+    List<Question> selectReleatedQuestion(Question question);
 }
