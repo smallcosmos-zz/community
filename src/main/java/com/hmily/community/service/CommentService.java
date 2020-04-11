@@ -2,6 +2,7 @@ package com.hmily.community.service;
 
 import com.hmily.community.domain.Comment;
 import com.hmily.community.dto.CommentDTO;
+import com.hmily.community.enums.CommentTypeEnum;
 
 import java.util.List;
 
@@ -12,5 +13,7 @@ import java.util.List;
 public interface CommentService {
     void insertComment(Comment comment);
 
-    List<CommentDTO> getCommentDTOByQuestionId(Integer id);
+    List<CommentDTO> getCommentDTOByTargetId(Integer id, CommentTypeEnum type);
+
+    Long getCommentCountById(Integer id);
 }

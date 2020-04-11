@@ -16,5 +16,8 @@ public interface CommentMapper {
 
     Comment selectCommentById(Integer id);
 
-    List<CommentDTO> getCommentDTOByQuestionId(Integer id, Integer type);
+    List<CommentDTO> getCommentDTOByTargetId(Integer id, Integer type);
+
+
+    Long getCommentCountById(Integer id);
 }

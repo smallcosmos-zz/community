@@ -11,6 +11,7 @@
 
     <select id="selectCommentById" resultType="comment">
         select * from comment
+        where id=#{id}
     </select>
 
     <resultMap id="getCommentsAndUsers" type="com.hmily.community.dto.CommentDTO">
@@ -28,11 +29,16 @@
             <result property="avatarUrl" column="avatar_url"></result>
         </association>
     </resultMap>
-    <select id="getCommentDTOByQuestionId" resultMap="getCommentsAndUsers">
+    <select id="getCommentDTOByTargetId" resultMap="getCommentsAndUsers">
         select c.*,u.id as uid ,name,avatar_url from comment c,user u
         where c.commentator = u.id
         and c.parent_id = #{param1}
         and c.type = #{param2}
         order by c.gmt_create desc
+    </select>
+
+
+    <select id="getCommentCountById" parameterType="Integer" resultType="Long">
+        select count(1) from comment where parent_id=#{id};
     </select>
 </mapper>

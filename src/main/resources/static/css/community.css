@@ -27,6 +27,16 @@ body{
 .comment{
     margin: 10px 0;
 }
+.sub-comments{
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+.sub-comments .btn{
+    margin: 10px 0
+}
 .text-desc{
     font-size: 12px;
     font-weight: normal;
@@ -54,10 +64,13 @@ body{
 .menu{
     color: #999;
 }
-.menu .icon{
+.menu .icon {
     margin-right: 6px;
     font-size: 15px;
     cursor: pointer;
+}
+.menu .active{
+    color: #155faa;
 }
 .menu .icon:hover{
     color: #155faa;

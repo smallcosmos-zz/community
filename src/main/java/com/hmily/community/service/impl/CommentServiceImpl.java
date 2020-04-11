@@ -3,7 +3,6 @@ package com.hmily.community.service.impl;
 import com.hmily.community.domain.Comment;
 import com.hmily.community.domain.Question;
 import com.hmily.community.dto.CommentDTO;
-import com.hmily.community.dto.QuestionDTO;
 import com.hmily.community.enums.CommentTypeEnum;
 import com.hmily.community.exception.CustomizeErrorCode;
 import com.hmily.community.exception.CustomizeException;
@@ -37,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
         }
         if(comment.getType() == CommentTypeEnum.COMMENT.getType()){
             //回复评论
-           Comment dbComment =  commentMapper.selectCommentById(comment.getId());
+           Comment dbComment =  commentMapper.selectCommentById(comment.getParentId());
            if(dbComment == null){
                throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
            }
@@ -55,7 +54,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDTO> getCommentDTOByQuestionId(Integer id) {
-        return commentMapper.getCommentDTOByQuestionId(id,CommentTypeEnum.QUESTION.getType());
+    public List<CommentDTO> getCommentDTOByTargetId(Integer id, CommentTypeEnum type) {
+        return commentMapper.getCommentDTOByTargetId(id,type.getType());
+    }
+
+    @Override
+    public Long getCommentCountById(Integer id) {
+        return commentMapper.getCommentCountById(id);
     }
 }

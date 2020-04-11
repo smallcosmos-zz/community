@@ -3,18 +3,22 @@ package com.hmily.community.controller;
 import com.hmily.community.domain.Comment;
 import com.hmily.community.domain.User;
 import com.hmily.community.dto.CommentCreateDTO;
+import com.hmily.community.dto.CommentDTO;
 import com.hmily.community.dto.ResultDTO;
+import com.hmily.community.enums.CommentTypeEnum;
 import com.hmily.community.exception.CustomizeErrorCode;
 import com.hmily.community.exception.CustomizeException;
 import com.hmily.community.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Date 2020/4/8 下午5:45
@@ -46,4 +50,12 @@ public class CommentController {
         commentService.insertComment(comment);
         return ResultDTO.okOf();
     }
+
+    @GetMapping("/comment/{id}")
+    @ResponseBody
+    public List<CommentDTO> getComment(@PathVariable("id") Integer id){
+        List<CommentDTO> commentDTOS =  commentService.getCommentDTOByTargetId(id, CommentTypeEnum.COMMENT);
+        return commentDTOS;
+    }
 }
+
