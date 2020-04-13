@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/community.css}">
     <script type="text/javascript" th:src="@{/js/jquery-1.11.3.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/js/community.js}"></script>
 </head>
 <body>
 <div th:replace="navigation::.navbar"></div>
@@ -22,26 +23,53 @@
                 <div class="form-group">
                     <label for="title">问题标题 (简单扼要) :</label>
                     <input type="text" class="form-control" name="title" id="title" placeholder="问题标题......"
-                           th:value="${title}">
+                           th:value="${title}"
+                           autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充 (必填,请参照右侧提示) :</label>
                     <textarea name="description" id="description" class="form-control" cols="30" rows="10"
-                              th:text="${description}"></textarea>
+                              th:text="${description}"
+                              autocomplete="off">
+                    </textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签 :</label>
                     <input type="text" class="form-control" name="tag" id="tag" placeholder="输入标签,以,号分隔"
-                           th:value="${tag}">
+                           th:value="${tag}"
+                           onfocus="showSelectTag()"
+                           autocomplete="off">
                 </div>
+                <!--标签-->
+                <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12 publish-tag-tab" id="selectTag" >
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" >
+                        <li role="presentation" th:each="selectCategory:${tagDTOS}"
+                            th:class="${selectCategoryStat.first ? 'active':''}">
+                            <a href="#home" th:href="${'#'+selectCategory.categoryName}" aria-controls="home" th:aria-controls="${selectCategory.categoryName}" role="tab" data-toggle="tab"
+                               th:text="${selectCategory.categoryName}"></a>
+                        </li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content publish-tags">
+                        <div role="tabpanel" th:class="${selectCategoryStat.first ? 'active tab-pane':'tab-pane'}"
+                             th:id="${selectCategory.categoryName}" th:each="selectCategory:${tagDTOS}">
+                            <span class="label label-info question-tag" onclick="selectTag(this)" th:data-tag="${tag}"    th:each="tag:${selectCategory.categoryTags}">
+                                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                                <span class="label label-info" th:text="${tag}" >spring</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="container-fluid main">
                     <div class="row">
-                        <div class="col-lg-9 col-md-12 col-sm-12 col-sm-12">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-sm-12 publish-error-display" >
                             <div style="width: 800px" class="alert alert-danger" role="alert" th:text="${error}"
-                                  th:if="${error != null}"></div>
+                                 th:if="${error != null}"></div>
                         </div>
                         <div class="col-lg-3 col-md-12 col-sm-12 col-sm-12">
-                            <button type="submit" class="btn btn-success btn-publish">确认发布</button>
+                            <button type="submit" class="btn btn-success publish-btn">确认发布</button>
                         </div>
                     </div>
                 </div>

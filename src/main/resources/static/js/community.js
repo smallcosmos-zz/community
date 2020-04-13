@@ -113,3 +113,29 @@ function post2Comment() {
     var id = $("#comment-id").val();
     comment(id,content,2)
 }
+
+function selectTag(value) {
+    var preValue = $("#tag").val();
+    if(preValue == ""){
+        $("#tag").val($(value).attr("data-tag"))
+    }else {
+        var tags = preValue.split(",");
+        for(var i=0;i<tags.length;i++){
+            if(tags[i] == $(value).attr("data-tag")){
+                return;
+            }
+        }
+        $("#tag").val(preValue+","+$(value).attr("data-tag"))
+        }
+}
+
+function showSelectTag() {
+    $("#selectTag").show();
+}
+
+function hideSelectTag() {
+    // 点击空白消失
+    $.onclick=function(){
+        $("#selectTag").hide();
+    }
+}

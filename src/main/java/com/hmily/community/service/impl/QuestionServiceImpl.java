@@ -7,12 +7,14 @@ import com.hmily.community.dto.QuestionDTO;
 import com.hmily.community.exception.CustomizeErrorCode;
 import com.hmily.community.exception.CustomizeException;
 import com.hmily.community.mapper.QuestionMapper;
+import com.hmily.community.mapper.TagMapper;
 import com.hmily.community.service.QuestionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -20,7 +22,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-
+    @Autowired
+    private TagMapper tagMapper;
     @Override
     public PageBean<QuestionDTO> getQuestionDTOList(Integer page, Integer pageSize) {
         Integer totalCount = questionMapper.getTotalCount();
@@ -64,6 +67,12 @@ public class QuestionServiceImpl implements QuestionService {
         if (question.getTag() == null || "".equals(question.getTag())) {
             throw new RuntimeException("问题标签不能为空");
         }
+        //判断标签是否是标签库中的标签
+        List<String> dbTags = tagMapper.queryAllTagName();
+
+         if(!dbTags.containsAll(Arrays.asList(question.getTag().split(",")))){
+             throw new RuntimeException("输入非法标签");
+       }
         if (question.getId() != null) {
             try {
                 //更新

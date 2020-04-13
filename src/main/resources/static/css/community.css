@@ -6,9 +6,31 @@ body{
     background-color: white;
     margin: 30px;
 }
-.btn-publish{
+.publish-btn{
     float: right;
-    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.publish-error-display{
+    margin-top: 15px;
+}
+
+.publish-tag-tab{
+    display: none;
+    margin-top: 10px;
+    padding-top:10px;
+}
+.publish-tag-tab .label-info{
+    margin-right: 10px;
+    white-space: normal;
+    font-size: 100%;
+    display: inline-block;
+    margin-top: 5px;
+}
+.publish-tags{
+    margin-right: 10px;
+}
+.publish-tags .tab-pane{
+    margin-top: 10px;
 }
 .media-object{
     width: 38px;
@@ -21,6 +43,7 @@ body{
 .question-tag{
     margin-right: 5px;
     font-size: 14px;
+    cursor: pointer;
 }
 .question-releated{
     padding-left: 0;
