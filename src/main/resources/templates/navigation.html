@@ -24,7 +24,10 @@
             </form>
             <ul class="nav navbar-nav navbar-right" th:if="${session.user != null}">
                 <li>
-                    <a th:href="@{/publish}">发布</a>
+                    <a th:href="@{/publish}">提问</a>
+                </li>
+                <li>
+                    <a th:href="@{/profile/replies}">通知 <span class="badge" th:text="${session.unreadCount}" th:if="${session.unreadCount != 0}">42</span></a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -33,7 +36,6 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="#" th:href="@{/profile/questions}">我的问题</a></li>
-                        <li><a href="#" th:href="@{/profile/replies}">我的回复</a></li>
                         <li><a href="#" th:href="@{/logout}">退出登录</a></li>
                     </ul>
                 </li>

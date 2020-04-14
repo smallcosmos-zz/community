@@ -1,12 +1,16 @@
 package com.hmily.community.service.impl;
 
 import com.hmily.community.domain.Comment;
+import com.hmily.community.domain.Notification;
 import com.hmily.community.domain.Question;
 import com.hmily.community.dto.CommentDTO;
 import com.hmily.community.enums.CommentTypeEnum;
+import com.hmily.community.enums.NotificationStatusEnum;
+import com.hmily.community.enums.NotificationTypeEnum;
 import com.hmily.community.exception.CustomizeErrorCode;
 import com.hmily.community.exception.CustomizeException;
 import com.hmily.community.mapper.CommentMapper;
+import com.hmily.community.mapper.NotificationMapper;
 import com.hmily.community.mapper.QuestionMapper;
 import com.hmily.community.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,8 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private NotificationMapper notificationMapper;
     @Override
     @Transactional(rollbackFor = CustomizeException.class)
     public void insertComment(Comment comment) {
@@ -41,6 +47,7 @@ public class CommentServiceImpl implements CommentService {
                throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
            }
            commentMapper.insertComment(comment);
+           createNotify(comment,dbComment.getCommentator(),NotificationTypeEnum.REPLY_COMMNET);
         }else{
             //回复问题
             Question question = questionMapper.getQuestionById(comment.getParentId());
@@ -48,9 +55,20 @@ public class CommentServiceImpl implements CommentService {
                 throw new CustomizeException(CustomizeErrorCode.QEUSTION_NOT_FONUF);
             }
             commentMapper.insertComment(comment);
-            questionMapper.addCommentCount(comment.getParentId());
+            createNotify(comment,question.getCreator(),NotificationTypeEnum.REPLY_QUESTION);
         }
 
+    }
+
+    public void createNotify(Comment comment , Integer receiver, NotificationTypeEnum typeEnum){
+        Notification notification = new Notification();
+        notification.setGmtCreate(comment.getGmtCreate());
+        notification.setNotifier(comment.getCommentator());
+        notification.setReceiver(receiver);
+        notification.setType(typeEnum.getType());
+        notification.setOuterId(comment.getParentId());
+        notification.setStatus(NotificationStatusEnum.NOTIFICATION_UNREAD.getStatus());
+        notificationMapper.insert(notification);
     }
 
     @Override
@@ -61,5 +79,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Long getCommentCountById(Integer id) {
         return commentMapper.getCommentCountById(id);
+    }
+
+    @Override
+    public Comment getCommentById(Integer outerId) {
+        return commentMapper.getCommentById(outerId);
     }
 }

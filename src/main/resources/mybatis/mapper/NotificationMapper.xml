@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hmily.community.mapper.NotificationMapper">
+
+    <resultMap type="com.hmily.community.domain.Notification" id="NotificationMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="notifier" column="notifier" jdbcType="INTEGER"/>
+        <result property="receiver" column="receiver" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="gmtCreate" column="gmt_create" jdbcType="INTEGER"/>
+        <result property="outerId" column="outer_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="NotificationMap">
+        select
+          id, notifier, receiver, type, status, gmt_create, outer_id
+        from community.notification
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="NotificationMap">
+        select
+          id, notifier, receiver, type, status, gmt_create, outer_id
+        from community.notification
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="NotificationMap">
+        select
+          id, notifier, receiver, type, status, gmt_create, outer_id
+        from community.notification
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="notifier != null">
+                and notifier = #{notifier}
+            </if>
+            <if test="receiver != null">
+                and receiver = #{receiver}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="gmtCreate != null">
+                and gmt_create = #{gmtCreate}
+            </if>
+            <if test="outerId != null">
+                and outer_id = #{outerId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into community.notification(notifier, receiver, type, status, gmt_create, outer_id)
+        values (#{notifier}, #{receiver}, #{type}, #{status}, #{gmtCreate}, #{outerId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update community.notification
+        <set>
+            <if test="notifier != null">
+                notifier = #{notifier},
+            </if>
+            <if test="receiver != null">
+                receiver = #{receiver},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate},
+            </if>
+            <if test="outerId != null">
+                outer_id = #{outerId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from community.notification where id = #{id}
+    </delete>
+
+    <select id="queryUnreadCount" parameterType="Integer" resultType="Integer">
+        select count(*) from notification where status=0 and receiver=#{id}
+    </select>
+    <select id="queryAllCount" resultType="Integer">
+         select count(*) from notification where  receiver=#{id}
+    </select>
+    <resultMap id="getNotifyAndUser" type="com.hmily.community.dto.NotificationDTO">
+        <id column="id" property="id"></id>
+        <result property="receiver" column="receiver"></result>
+        <result property="notifier" column="notifier"></result>
+        <result property="type" column="type"></result>
+        <result property="status" column="status"></result>
+        <result property="gmtCreate" column="gmt_create"></result>
+        <result property="outerId" column="outer_id"></result>
+        <association property="user" javaType="User">
+            <id column="uid" property="id"></id>
+            <result property="name" column="name"></result>
+        </association>
+    </resultMap>
+    <select id="getNotificationDTOListByUserId" parameterType="Integer" resultMap="getNotifyAndUser">
+        select n.*,u.id as uid,name
+         from notification n,user u
+        where n.notifier = u.id
+        and n.receiver=#{param1}
+        limit #{param2},#{param3}
+    </select>
+
+    <select id="getTotalCountByUserId" parameterType="integer" resultType="Integer">
+        select count(1) from notification where receiver=#{id}
+    </select>
+</mapper>

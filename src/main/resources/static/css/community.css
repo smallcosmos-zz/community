@@ -74,9 +74,12 @@ body{
 .sub-comments .btn{
     margin: 10px 0
 }
-.text-desc{
+.profile-text-desc{
     font-size: 12px;
     font-weight: normal;
+    color: #999;
+}
+.profile-text-desc a{
     color: #999;
 }
 .profile .section{

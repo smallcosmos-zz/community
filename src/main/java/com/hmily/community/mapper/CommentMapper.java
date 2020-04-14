@@ -20,4 +20,6 @@ public interface CommentMapper {
 
 
     Long getCommentCountById(Integer id);
+
+    Comment getCommentById(Integer outerId);
 }

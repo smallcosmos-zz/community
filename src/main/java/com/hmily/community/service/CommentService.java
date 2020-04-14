@@ -16,4 +16,6 @@ public interface CommentService {
     List<CommentDTO> getCommentDTOByTargetId(Integer id, CommentTypeEnum type);
 
     Long getCommentCountById(Integer id);
+
+    Comment getCommentById(Integer outerId);
 }
