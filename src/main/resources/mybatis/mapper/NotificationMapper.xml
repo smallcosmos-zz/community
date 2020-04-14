@@ -119,6 +119,7 @@
          from notification n,user u
         where n.notifier = u.id
         and n.receiver=#{param1}
+        order by gmt_create desc
         limit #{param2},#{param3}
     </select>
 

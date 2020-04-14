@@ -33,8 +33,11 @@ public class IndexController {
         PageBean<QuestionDTO> pageBean = questionService.getQuestionDTOList(page,pageSize);
         model.addAttribute("pageBean",pageBean);
         User user = (User) request.getSession().getAttribute("user");
-        Integer unreadCount = notificationService.queryUnreadCount(user.getId());
-        request.getSession().setAttribute("unreadCount",unreadCount);
+        if(user!=null){
+            Integer unreadCount = notificationService.queryUnreadCount(user.getId());
+            request.getSession().setAttribute("unreadCount",unreadCount);
+        }
+
         //model.addAttribute("unreadCount",unreadCount);
         return "index";
     }

@@ -6,9 +6,13 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
     <link rel="stylesheet" th:href="@{/css/community.css}">
+    <link rel="stylesheet" th:href="@{/css/editormd.preview.min.css}">
     <script type="text/javascript" th:src="@{/js/jquery-1.11.3.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
     <script type="text/javascript" th:src="@{/js/community.js}"></script>
+    <script type="text/javascript" th:src="@{/js/editormd.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/marked.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/prettify.min.js}"></script>
 </head>
 <body>
 <div th:replace="navigation::.navbar"></div>
@@ -20,7 +24,14 @@
                 <h4 class="question-title" th:text="${questionDTO.title}"></h4>
                 <span class="text-desc">作者: [[${questionDTO.user.name}]] | 发布于[[${#dates.format(questionDTO.gmtCreate, 'yyyy-MM-dd HH:mm:ss')}]] | 阅读数: [[${questionDTO.viewCount}]]  </span>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-sm-12">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12 " th:text="${questionDTO.description}"></div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12 " id="question-view" >
+                    <textarea th:text="${questionDTO.description}" style="display:none;"></textarea>
+                </div>
+                <script type="text/javascript">
+                    $(function() {
+                       editormd.markdownToHTML("question-view", {});
+                    });
+                </script>
                 <hr class="col-lg-12 col-md-12 col-sm-12 col-sm-12 ">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-sm-12 ">
                     <span class="label label-info question-tag" th:each="t:${questionDTO.tag.split(',')}">

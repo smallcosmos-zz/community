@@ -1,6 +1,5 @@
 package com.hmily.community.controller;
 
-import com.hmily.community.domain.Notification;
 import com.hmily.community.domain.User;
 import com.hmily.community.dto.NotificationDTO;
 import com.hmily.community.dto.PageBean;

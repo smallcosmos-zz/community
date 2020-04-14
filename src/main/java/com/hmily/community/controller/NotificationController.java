@@ -5,6 +5,8 @@ import com.hmily.community.domain.Notification;
 import com.hmily.community.dto.QuestionDTO;
 import com.hmily.community.enums.NotificationStatusEnum;
 import com.hmily.community.enums.NotificationTypeEnum;
+import com.hmily.community.exception.CustomizeErrorCode;
+import com.hmily.community.exception.CustomizeException;
 import com.hmily.community.service.CommentService;
 import com.hmily.community.service.NotificationService;
 import com.hmily.community.service.QuestionService;
@@ -28,6 +30,9 @@ public class NotificationController {
     @GetMapping("/notification/{id}")
     public String isRead(@PathVariable("id") Long id){
         Notification notification = notificationService.queryById(id);
+        if(notification == null){
+            throw new CustomizeException(CustomizeErrorCode.Notify_IS_NULL);
+        }
         notification.setStatus(NotificationStatusEnum.NOTIFICATION_READ.getStatus());
         notificationService.update(notification);
         if(notification.getType() == NotificationTypeEnum.REPLY_QUESTION.getType()){

@@ -9,6 +9,7 @@ import com.hmily.community.enums.CommentTypeEnum;
 import com.hmily.community.exception.CustomizeErrorCode;
 import com.hmily.community.exception.CustomizeException;
 import com.hmily.community.service.CommentService;
+import com.hmily.community.service.NotificationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private NotificationService notificationService;
     @PostMapping("/comment")
     @ResponseBody
     public Object insertComment(@RequestBody CommentCreateDTO commentCreateDTO,
@@ -45,6 +48,8 @@ public class CommentController {
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(comment.getGmtCreate());
         commentService.insertComment(comment);
+        Integer unreadCount = notificationService.queryUnreadCount(user.getId());
+        request.getSession().setAttribute("unreadCount",unreadCount);
         return ResultDTO.okOf();
     }
 
