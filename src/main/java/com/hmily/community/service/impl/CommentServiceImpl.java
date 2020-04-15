@@ -61,6 +61,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public void createNotify(Comment comment , Integer receiver, NotificationTypeEnum typeEnum){
+        if (comment.getCommentator() == receiver){
+            return;
+        }
         Notification notification = new Notification();
         notification.setGmtCreate(comment.getGmtCreate());
         notification.setNotifier(comment.getCommentator());

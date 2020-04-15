@@ -85,12 +85,12 @@
                     <hr class="col-lg-12 col-md-12 col-sm-12 col-sm-12 comment-sp">
                     <div class="media-left">
                         <span href="#">
-                            <img class="media-object img-rounded" th:src="${questionDTO.user.avatarUrl}" alt="...">
+                            <img class="media-object img-rounded" th:src="${session.user!=null?session.user.avatarUrl:'/images/default-avatar.png'}" alt="...">
                         </span>
                     </div>
                     <div class="media-body comment-media-body">
                         <span>
-                            <h5 class="media-heading" th:text="${questionDTO.user.name}"></h5>
+                            <h5 class="media-heading" th:text="${session.user!=null?session.user.name:'匿名用户'}"></h5>
                         </span>
                     </div>
                     <input type="hidden" id="question_id" th:value="${questionDTO.id}">
@@ -134,6 +134,6 @@
         </div>
     </div>
 </div>
-
+<div th:replace="footer::.foot"></div>
 </body>
 </html>

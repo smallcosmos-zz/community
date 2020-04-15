@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface QuestionService {
 
-    PageBean<QuestionDTO> getQuestionDTOList(Integer page, Integer paeSize);
+    PageBean<QuestionDTO> getQuestionDTOList(String search, Integer page, Integer paeSize);
 
     PageBean<QuestionDTO> getQuestionDTOListByUserId(Integer id, Integer page, Integer pageSize);
 
@@ -18,4 +18,6 @@ public interface QuestionService {
     void createOrUpdateQuestion(Question question, HttpServletRequest request);
 
     List<Question> selectReleatedQuestion(QuestionDTO question);
+
+    List<Question> selectHot();
 }

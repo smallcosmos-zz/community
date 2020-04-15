@@ -1,5 +1,6 @@
 package com.hmily.community.controller;
 
+import com.hmily.community.domain.Question;
 import com.hmily.community.domain.User;
 import com.hmily.community.dto.PageBean;
 import com.hmily.community.dto.QuestionDTO;
@@ -7,6 +8,7 @@ import com.hmily.community.mapper.NotificationMapper;
 import com.hmily.community.service.NotificationService;
 import com.hmily.community.service.QuestionService;
 import com.hmily.community.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +31,10 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request,Model model,
                         @RequestParam(name = "page",defaultValue = "1") Integer page,
-                        @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize) {
-        PageBean<QuestionDTO> pageBean = questionService.getQuestionDTOList(page,pageSize);
+                        @RequestParam(name = "pageSize",defaultValue = "7") Integer pageSize,
+                         @RequestParam(name = "search",required = false) String search) {
+        model.addAttribute("search",search);
+        PageBean<QuestionDTO> pageBean = questionService.getQuestionDTOList(search,page,pageSize);
         model.addAttribute("pageBean",pageBean);
         User user = (User) request.getSession().getAttribute("user");
         if(user!=null){
@@ -38,7 +42,9 @@ public class IndexController {
             request.getSession().setAttribute("unreadCount",unreadCount);
         }
 
-        //model.addAttribute("unreadCount",unreadCount);
+
+        List<Question> selectHot = questionService.selectHot();
+        model.addAttribute("hots",selectHot);
         return "index";
     }
 }

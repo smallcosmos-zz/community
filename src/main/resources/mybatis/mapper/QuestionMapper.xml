@@ -8,8 +8,14 @@
         values (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag})
     </insert>
 
-    <select id="getTotalCount" resultType="Integer">
-        select count(1) from question;
+    <select id="getTotalCount" parameterType="String" resultType="Integer">
+        select count(1)
+        from question
+        <where>
+            <if test="search != null and search != ''">
+                and title regexp (#{search});
+            </if>
+        </where>
     </select>
     <resultMap id="getQuestionsAndUsers" type="com.hmily.community.dto.QuestionDTO">
         <id property="id" column="id"></id>
@@ -31,13 +37,16 @@
     <sql id="questionAndUSer">
         select q.*,u.id as user_id,u.name,u.avatar_url from question q,user u
     </sql>
-    <select id="getQuestionList" resultMap="getQuestionsAndUsers">
+    <select id="getQuestionList"  resultMap="getQuestionsAndUsers">
         <include refid="questionAndUSer"></include>
         where q.creator = u.id
+        <if test="search != null and search != ''">
+            and title regexp (#{search})
+        </if>
         order by gmt_create desc
-        limit #{param1},#{param2}
+        limit #{offset},#{pageSize}
     </select>
-    <select id="getTotalCountByUserId" resultType="Integer">
+    <select id="getTotalCountByUserId"  resultType="Integer">
         select count(1) from question where creator = #{id};
     </select>
 
@@ -85,5 +94,11 @@
 
     <select id="selectReleatedQuestion" parameterType="Question" resultType="question">
         select * from question where id != #{id} and tag regexp #{tag}
+    </select>
+
+    <select id="selectHot" resultType="Question">
+        select * from question
+       order by view_count desc,comment_count desc
+        limit 0,10
     </select>
 </mapper>

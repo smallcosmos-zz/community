@@ -1,0 +1,11 @@
+2020-04-15 16:22:53.566  INFO 5418 --- [main] c.hmily.community.CommunityApplication   : Starting CommunityApplication on zhaoli-PC with PID 5418 (/home/zhaoli/IdeaProjects/community/target/classes started by zhaoli in /home/zhaoli/IdeaProjects/community)
+2020-04-15 16:22:53.573  INFO 5418 --- [main] c.hmily.community.CommunityApplication   : No active profile set, falling back to default profiles: default
+2020-04-15 16:22:56.634  INFO 5418 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-15 16:22:56.666  INFO 5418 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-15 16:22:56.667  INFO 5418 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.17]
+2020-04-15 16:22:56.803  INFO 5418 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-04-15 16:22:56.803  INFO 5418 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 3128 ms
+2020-04-15 16:22:58.570  INFO 5418 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-15 16:22:58.920  INFO 5418 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2020-04-15 16:22:59.267  INFO 5418 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2020-04-15 16:22:59.274  INFO 5418 --- [main] c.hmily.community.CommunityApplication   : Started CommunityApplication in 7.134 seconds (JVM running for 15.588)

@@ -3,6 +3,7 @@ package com.hmily.community.mapper;
 import com.hmily.community.domain.Question;
 import com.hmily.community.dto.QuestionDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,9 +11,9 @@ import java.util.List;
 public interface QuestionMapper {
     void insertQuestion(Question question);
 
-    List<QuestionDTO> getQuestionList(Integer offset,Integer pageSize);
+    List<QuestionDTO> getQuestionList(@Param("search") String search, @Param("offset")Integer offset, @Param("pageSize")Integer pageSize);
 
-    Integer getTotalCount();
+    Integer getTotalCount(String search);
 
     Integer getTotalCountByUserId(Integer id);
 
@@ -29,4 +30,6 @@ public interface QuestionMapper {
     Question getQuestionById(Integer id);
 
     List<Question> selectReleatedQuestion(Question question);
+
+    List<Question> selectHot();
 }

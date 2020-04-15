@@ -25,11 +25,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private TagMapper tagMapper;
     @Override
-    public PageBean<QuestionDTO> getQuestionDTOList(Integer page, Integer pageSize) {
-        Integer totalCount = questionMapper.getTotalCount();
+    public PageBean<QuestionDTO> getQuestionDTOList(String search, Integer page, Integer pageSize) {
+        Integer totalCount = questionMapper.getTotalCount(StringUtils.replace(search," ","|"));
         PageBean<QuestionDTO> pageBean = new PageBean<>(page, pageSize, totalCount);
 
-        List<QuestionDTO> list = questionMapper.getQuestionList(pageBean.getOffset(), pageBean.getPageSize());
+        List<QuestionDTO> list = questionMapper.getQuestionList(StringUtils.replace(search," ","|"),pageBean.getOffset(), pageBean.getPageSize());
         pageBean.setList(list);
         return pageBean;
     }
@@ -108,5 +108,10 @@ public class QuestionServiceImpl implements QuestionService {
         question.setTag(StringUtils.replace(questionDTO.getTag(),",","|"));
         List<Question> releatedQuestion = questionMapper.selectReleatedQuestion(question);
         return releatedQuestion;
+    }
+
+    @Override
+    public List<Question> selectHot() {
+        return questionMapper.selectHot();
     }
 }

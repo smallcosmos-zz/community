@@ -36,3 +36,17 @@ github:
   redirect:
     uri: http://localhost:8080/callback
 
+aliyun:
+  AccessKey:
+    ID: LTAI4FcnPBfgNQY3PMZcnDgU
+    Secret: aqcK2EfeAkplKE2uoSxTWrwCZyuQXP
+  endpoint: http://oss-cn-beijing.aliyuncs.com
+  bucketName: smallcosmos
+logging:
+  path: logs
+  file:
+    max-size: 200MB
+    max-history: 30
+  level:
+    root: info
+    com.hmily.community.mapper: debug
