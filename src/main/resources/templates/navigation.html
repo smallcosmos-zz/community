@@ -42,7 +42,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right" th:if="${session.user == null}">
                 <li th:if="${session.user == null}">
-                    <a th:href="@{https://github.com/login/oauth/authorize(client_id='04756ad84718e094174b',redirect_uri=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}">登录</a>
+<!--                    <a th:href="@{https://github.com/login/oauth/authorize(client_id='af36ccbaf9f845f7d2e7',redirect_uri=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}">登录</a>-->
+                    <a th:href="@{https://github.com/login/oauth/authorize(client_id='af36ccbaf9f845f7d2e7',redirect_uri=${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#request.getServerPort()+'/callback'},scope='user',state=1)}">登录</a>
                 </li>
             </ul>
         </div>
