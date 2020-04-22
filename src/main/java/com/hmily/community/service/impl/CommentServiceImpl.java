@@ -55,6 +55,7 @@ public class CommentServiceImpl implements CommentService {
                 throw new CustomizeException(CustomizeErrorCode.QEUSTION_NOT_FONUF);
             }
             commentMapper.insertComment(comment);
+            questionMapper.addCommentCount(question.getId());
             createNotify(comment,question.getCreator(),NotificationTypeEnum.REPLY_QUESTION);
         }
 
