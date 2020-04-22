@@ -26,8 +26,6 @@ public class IndexController {
     private UserService userService;
     @Autowired
     private QuestionService questionService;
-    @Autowired
-    private NotificationService notificationService;
     @GetMapping("/")
     public String index(HttpServletRequest request,Model model,
                         @RequestParam(name = "page",defaultValue = "1") Integer page,
@@ -36,11 +34,6 @@ public class IndexController {
         model.addAttribute("search",search);
         PageBean<QuestionDTO> pageBean = questionService.getQuestionDTOList(search,page,pageSize);
         model.addAttribute("pageBean",pageBean);
-        User user = (User) request.getSession().getAttribute("user");
-        if(user!=null){
-            Integer unreadCount = notificationService.queryUnreadCount(user.getId());
-            request.getSession().setAttribute("unreadCount",unreadCount);
-        }
 
 
         List<Question> selectHot = questionService.selectHot();

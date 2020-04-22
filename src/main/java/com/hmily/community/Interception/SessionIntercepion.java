@@ -1,6 +1,7 @@
 package com.hmily.community.Interception;
 
 import com.hmily.community.domain.User;
+import com.hmily.community.service.NotificationService;
 import com.hmily.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 public class SessionIntercepion implements HandlerInterceptor {
     @Autowired
     private UserService userService;
+    @Autowired
+    private NotificationService notificationService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie[] cookies = request.getCookies();
@@ -23,7 +26,12 @@ public class SessionIntercepion implements HandlerInterceptor {
                 if ("token".equals(cookie.getName())) {
                     String token = cookie.getValue();
                     User user = userService.getUserByToken(token);
-                    request.getSession().setAttribute("user", user);
+                    if(user!=null){
+                        Integer unreadCount = notificationService.queryUnreadCount(user.getId());
+                        request.getSession().setAttribute("unreadCount",unreadCount);
+                        request.getSession().setAttribute("user", user);
+                    }
+
                     break;
                 }
             }
