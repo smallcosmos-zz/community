@@ -1,0 +1,73 @@
+<!--
+Author: xmoban.cn
+Author URL: http://www.xmoban.cn
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Internship Sign In & Sign Up Form a Responsive Widget Template :: xmoban.cn</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Internship Sign In & Sign Up Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Custom Theme files -->
+<link href="css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css" media="all">
+<link href="css/snow.css" rel="stylesheet"  th:href="@{/css/snow.css}" type="text/css" media="all" />
+<link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}" type="text/css" media="all" />
+
+	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+<!--	<link rel="stylesheet" th:href="@{/css/community.css}">-->
+
+	<script type="text/javascript" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+<!-- //Custom Theme files -->
+<!-- web font -->
+<link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+<!-- //web font -->
+</head>
+<body>
+<div class="snow-container">
+			  <div class="snow foreground"></div>
+			  <div class="snow foreground layered"></div>
+			  <div class="snow middleground"></div>
+			  <div class="snow middleground layered"></div>
+			  <div class="snow background"></div>
+			  <div class="snow background layered"></div>
+			</div>
+
+<div class="top-buttons-agileinfo">
+<a href="index.html" th:href="@{/login}" class="active">登录</a><a href="signup.html" th:href="@{/register}">注册</a>
+</div>
+<div class="main-agileits">
+<!--form-stars-here-->
+	<div style="width: auto;" class="alert alert-danger" role="alert" th:text="${msg}"
+		 th:if="${msg != null}"></div>
+		<div class="form-w3-agile">
+			<h2 class="sub-agileits-w3layouts">登录</h2>
+			<form action="login" method="post">
+					<input type="text" name="phoneNumbers" placeholder="电话号码" required="" />
+					<input type="password" name="password" placeholder="密码" required="" />
+					<a href="#" class="forgot-w3layouts">忘记密码 ?</a>
+				<div class="submit-w3l">
+					<input type="submit" value="确定">
+				</div>
+				<p class="p-bottom-w3ls"><a href="signup.html" th:href="@{/register}">点这儿注册</a>如果你还没有一个账号?</p>
+				<span><a th:href="@{https://github.com/login/oauth/authorize(client_id='af36ccbaf9f845f7d2e7',redirect_uri=${#httpServletRequest.getScheme()+'://'+#httpServletRequest.getServerName()+':'+#request.getServerPort()+'/callback'},scope='user',state=1)}">
+					<img style="margin-bottom: -45px;" th:src="@{/images/GitHub.png}"></a></span>
+			</form>
+		</div>
+		</div>
+<!--//form-ends-here-->
+<!-- copyright -->
+	<div class="copyright w3-agile">
+		<p> © 2017 Internship Sign In & Sign Up Form . All rights reserved | Design by <a href="http://www.xmoban.cn/" target="_blank">xmoban.cn</a></p>
+	</div>
+	<!-- //copyright -->
+
+</body>
+</html>

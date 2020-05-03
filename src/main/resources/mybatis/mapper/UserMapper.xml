@@ -5,13 +5,33 @@
 <mapper namespace="com.hmily.community.mapper.UserMapper">
 <!--    插入用户-->
     <insert id="insertUser" parameterType="User">
-        insert into user (account_id,name,token,gmt_create,gmt_modified,avatar_url)
-        values (#{accountId},#{name},#{token},#{gmtCreate},#{gmtModified},#{avatarUrl})
+        insert into user (account_id,name,token,gmt_create,gmt_modified,bio,avatar_url,password,phoneNumbers)
+        values (#{accountId,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{token,jdbcType=CHAR},
+        #{gmtCreate,jdbcType=BIGINT},
+        #{gmtModified,jdbcType=BIGINT},
+        #{bio,jdbcType=VARCHAR},
+        #{avatarUrl,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},
+        #{phoneNumbers,jdbcType=VARCHAR}
+        )
     </insert>
 <!--    根据token查询用户-->
     <select id="getUserByToken" parameterType="String" resultType="User">
         select * from user
         where token = #{token}
+    </select>
+
+    <select id="checkPwd" parameterType="user" resultType="User">
+        select * from user
+        where phoneNumbers = #{phoneNumbers}
+        and password =#{password}
+    </select>
+
+    <select id="getUserByPhoneNumbers" parameterType="String" resultType="User">
+        select * from user
+        where phoneNumbers = #{phoneNumbers}
     </select>
 
     <select id="getUserByAccountId" parameterType="String" resultType="User">
@@ -22,11 +42,15 @@
     <update id="updateUser" parameterType="User">
         update user
         set
-        name=#{name},
-        token=#{token},
-        gmt_modified=#{gmtModified},
-        avatar_url=#{avatarUrl}
+        name=#{name,jdbcType=VARCHAR},
+        token=#{token,jdbcType=VARCHAR},
+        gmt_modified=#{gmtModified,jdbcType=BIGINT},
+        avatar_url=#{avatarUrl,jdbcType=VARCHAR}
         where
-        id=#{id}
+        id=#{id, jdbcType=INTEGER}
     </update>
+
+    <select id="checkPhoneNumbers" parameterType="String" resultType="user">
+        select * from user where phoneNumbers = #{phoneNumbers};
+    </select>
 </mapper>

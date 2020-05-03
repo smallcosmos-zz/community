@@ -33,6 +33,7 @@ public class AliyunProvider {
     @Value("${aliyun.bucketName}")
     String bucketName;
 
+
     //文件存储目录
     private String filedir = "hmily/communnity/";
 

@@ -1,0 +1,154 @@
+<!--
+Author: xmoban.cn
+Author URL: http://www.xmoban.cn
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>注册页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="keywords"
+          content="Internship Sign In & Sign Up Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements"/>
+    <script type="application/x-javascript"> addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    } </script>
+    <!-- Custom Theme files -->
+    <link href="css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet" type="text/css"
+          media="all">
+    <link href="css/snow.css" rel="stylesheet" th:href="@{/css/snow.css}" type="text/css" media="all"/>
+    <link href="css/style.css" rel="stylesheet" th:href="@{/css/style.css}" type="text/css" media="all"/>
+    <!-- //Custom Theme files -->
+    <!-- web font -->
+    <link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+<!--    <link rel="stylesheet" th:href="@{/css/community.css}">-->
+
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{/js/community.js}"></script>
+    <!--validate-->
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <!-- //web font -->
+
+    <script>
+        //自定义校验规则
+        $.validator.addMethod(
+            //规则
+            "checkPhoneNumbers",
+            function(value,element,params){
+                var isExist = false;
+                //alert(value)
+                $.ajax({
+                    "async":false,//如果此处为true则为ajax的异步加载，但是在success方法中isExist赋值过程中会出现异步问题，所以要改成同步
+                    "url":"/register/"+value,
+                    "type":"GET",
+                    "success":function(data){
+                        //alert(data)
+                        isExist = data;
+                    }
+                });
+                return !isExist;
+            }
+        );
+
+        $().ready(function () {
+            // 在键盘按下并释放及提交后验证提交表单
+            $("#registerForm").validate({
+                rules: {
+                    name: "required",
+
+                    password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    repassword: {
+                        required: true,
+                        minlength: 5,
+                        equalTo: "#password"
+                    },
+                    phoneNumbers: {
+                        required: true,
+                        minlength: 11,
+                        maxlength: 11,
+                        checkPhoneNumbers: true
+
+                    },
+                },
+                messages: {
+                    name: "请输入用户名",
+
+                    password: {
+                        required: "请输入密码",
+                        minlength: "密码长度不能小于 6 个字母"
+                    },
+                    repassword: {
+                        required: "请输入密码",
+                        minlength: "密码长度不能小于 6 个字母",
+                        equalTo: "两次密码输入不一致"
+                    },
+                    phoneNumbers: {
+                        minlength: "请输入合法的电话号码",
+                        maxlength: "请输入合法的电话号码",
+                        checkPhoneNumbers: "该手机号码已经被注册了"
+                    }
+                }
+            })
+        });
+
+    </script>
+</head>
+<body>
+<div class="snow-container">
+    <div class="snow foreground"></div>
+    <div class="snow foreground layered"></div>
+    <div class="snow middleground"></div>
+    <div class="snow middleground layered"></div>
+    <div class="snow background"></div>
+    <div class="snow background layered"></div>
+</div>
+
+<div class="top-buttons-agileinfo">
+    <a href="index.html" th:href="@{/login}">登录</a><a href="signup.html" th:href="@{/register}" class="active">注册</a>
+</div>
+
+<div class="main-agileits">
+    <!--form-stars-here-->
+    <div class="form-w3-agile">
+        <h2 class="sub-agileits-w3layouts">注册</h2>
+        <form action="#" th:action="@{/register}" id="registerForm" method="post">
+            <input type="text" id="name" name="name" placeholder="用户名" required=""/>
+            <input type="password" id="password" name="password" placeholder="密码" required=""/>
+            <input type="password" id="repassword" name="repassword" placeholder="再次输入密码" required=""/>
+
+            <input type="text" name="phoneNumbers" id="phoneNumbers" placeholder="电话号码">
+
+
+            <input type="text" name="confirmCode" placeholder="验证码">
+            <button  style="position: relative;top: -67px;left: 201px;" id="reg-btn" type="button" onclick="getConfirmCode(this)" class="btn btn-default">点击获取验证码
+            </button>
+            <div class="submit-w3l">
+                <input type="submit" value="确定">
+            </div>
+        </form>
+    </div>
+</div>
+<!--//form-ends-here-->
+<!-- copyright -->
+<div class="copyright w3-agile">
+    <p> © 2017 Internship Sign In & Sign Up Form . All rights reserved | Design by <a href="http://www.xmoban.cn/"
+                                                                                      target="_blank">xmoban.cn</a></p>
+</div>
+<!-- //copyright -->
+
+</body>
+</html>

@@ -23,7 +23,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createOrUpdateUser(User user) {
         User dbUser = userMapper.getUserByAccountId(user.getAccountId());
-        if (dbUser == null){
+        User dbUser2 =  userMapper.getUserByPhoneNumbers(user.getPhoneNumbers());
+        if (dbUser == null && dbUser2 == null){
             //插入用户
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
@@ -38,4 +39,31 @@ public class UserServiceImpl implements UserService {
             userMapper.updateUser(dbUser);
         }
     }
+
+    @Override
+    public boolean checkPhoneNumbers(String phoneNumbers) {
+      User user  = userMapper.checkPhoneNumbers(phoneNumbers);
+       if(user != null){
+           return true;
+       }
+        return false;
+    }
+
+    @Override
+    public boolean checkPwd(User user) {
+        User dbUser = userMapper.checkPwd(user);
+        if(dbUser != null){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void updateToken(String token, String phoneNumbers) {
+        User user = userMapper.getUserByPhoneNumbers(phoneNumbers);
+        user.setToken(token);
+        userMapper.updateUser(user);
+    }
+
+
 }

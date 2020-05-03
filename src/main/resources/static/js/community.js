@@ -85,7 +85,7 @@ function comment(targetId,content,type) {
                 if (msg.code == 2003) {
                     var isAccepted = confirm(msg.message);
                     if (isAccepted) {
-                        window.open("https://github.com/login/oauth/authorize?client_id=04756ad84718e094174b&redirect_uri=http://localhost:8080/callback&scope=user&state=1")
+                        window.open("https://github.com/login/oauth/authorize?client_id=af36ccbaf9f845f7d2e7&redirect_uri=http://localhost:8080/callback&scope=user&state=1")
                         window.localStorage.setItem("closeable", "true");
                     }
                 } else {
@@ -138,4 +138,34 @@ function hideSelectTag() {
     $.onclick=function(){
         $("#selectTag").hide();
     }
+}
+
+
+
+//计时函数
+function timeCount(val,timeleft){
+    timeleft-=1
+    if (timeleft>0){
+        $(val).html(timeleft+" 秒后重发");
+        setTimeout(timeCount(val,timeleft),1000);
+    }
+    else {
+        $(val).html("重新发送");
+        timeleft=60   //重置等待时间
+        $(val).removeAttr("disabled");
+    }
+}
+
+function getConfirmCode(val) {
+    var phoneNumbers =  $("#phoneNumbers").val();
+    $(val).attr("disabled",true);
+    var timeleft = 60;
+    $.ajax({
+        type: "GET",
+        url: "/sms/"+phoneNumbers,
+        success: function (msg) {
+            alert(msg);
+        }
+    });
+    timeCount(val,timeleft);
 }

@@ -9,7 +9,13 @@ public interface UserMapper {
 
     User getUserByToken(String token);
 
+    User getUserByPhoneNumbers(String phoneNumbers);
+
     User getUserByAccountId(String accountId);
 
     void updateUser(User dbUser);
+
+    User checkPhoneNumbers(String phoneNumbers);
+
+    User checkPwd(User user);
 }

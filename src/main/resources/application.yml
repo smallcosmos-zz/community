@@ -3,7 +3,7 @@ spring:
     username: root
     password: 123456
     url: jdbc:mysql:///community?useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     #   数据源其他配置
     initialSize: 5
@@ -24,6 +24,9 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
   thymeleaf:
     cache: false
+  redis:
+    host: 127.0.0.1
+    port: 6379
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
@@ -31,17 +34,19 @@ mybatis:
 
 github:
   client:
-    id: 04756ad84718e094174b
-    secret: 00f94308d8bad0203575cbd5fed04d28cc73f5b0
+    id: xxxx
+    secret: xxxx
   redirect:
-    uri: http://localhost:8080/callback
+    uri: xxxx
 
 aliyun:
   AccessKey:
-    ID: LTAI4FcnPBfgNQY3PMZcnDgU
-    Secret: aqcK2EfeAkplKE2uoSxTWrwCZyuQXP
-  endpoint: http://oss-cn-beijing.aliyuncs.com
-  bucketName: smallcosmos
+    ID: xxxx
+    Secret: xxxx
+  endpoint: xxxx
+  bucketName: xxxx
+  regionID: xxxx
+  SignName: xxxx
 logging:
   path: logs
   file:
@@ -50,3 +55,4 @@ logging:
   level:
     root: info
     com.hmily.community.mapper: debug
+

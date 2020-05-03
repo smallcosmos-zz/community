@@ -1,9 +1,6 @@
 package com.hmily.community.service;
 
 import com.hmily.community.domain.User;
-import com.hmily.community.mapper.UserMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 public interface UserService {
 
@@ -12,4 +9,10 @@ public interface UserService {
     User getUserByToken(String token);
 
     void createOrUpdateUser(User user);
+
+    boolean checkPhoneNumbers(String phoneNumbers);
+
+    boolean checkPwd(User user);
+
+    void updateToken(String token, String phoneNumbers);
 }
