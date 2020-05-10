@@ -105,8 +105,19 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> selectReleatedQuestion(QuestionDTO questionDTO) {
         Question question = new Question();
         question.setId(questionDTO.getId());
-        question.setTag(StringUtils.replace(questionDTO.getTag(),",","|"));
+        String tags = StringUtils.replace(questionDTO.getTag(), ",", "|");
+        //如果tags里面存在c++，则将其转化为c\\+\\+
+        StringBuilder stringBuilder = new StringBuilder(tags);
+        int i = stringBuilder.indexOf("+");
+        while (i != -1){
+            stringBuilder.insert(i,"\\\\");
+            i = stringBuilder.indexOf("+",i+3);
+        }
+         tags = stringBuilder.toString();
+        question.setTag(tags);
         List<Question> releatedQuestion = questionMapper.selectReleatedQuestion(question);
+
+
         return releatedQuestion;
     }
 
